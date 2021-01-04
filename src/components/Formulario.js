@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { v4 as uuid } from 'uuid';
 
 const Formulario = () => {
   const [cita, actualizarCita] = useState({
@@ -9,6 +10,8 @@ const Formulario = () => {
     sintomas: "",
   });
 
+  const [error, actualizarError] = useState(false);
+
   const HandleChange = (e) => {
     actualizarCita({ ...cita, [e.target.name]: e.target.value });
   };
@@ -18,12 +21,33 @@ const Formulario = () => {
   const submitCita = (e) => {
     e.preventDefault();
 
-    
+    // Validar
+    let validForm = true;
+    Object.keys(cita).some(
+      (data) => cita[data].trim() === "" && (validForm = false)
+    );
+    if (!validForm) {
+      actualizarError(true);
+      return;
+    } 
+
+    actualizarError(false);
+
+    //Asignar un ID
+    cita.id = uuid();
+
+    console.log(cita);
+
   };
 
   return (
     <Fragment>
       <h2>Crear Cita</h2>
+
+      {error && (
+        <p className="alerta-error">Todos los campos son obligatorios</p>
+      )}
+
       <form onSubmit={submitCita}>
         <label>Nombre Mascota</label>
         <input
