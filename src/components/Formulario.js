@@ -1,14 +1,17 @@
 import React, { Fragment, useState } from "react";
 import { v4 as uuid } from 'uuid';
+import PropTypes from "prop-types";
 
-const Formulario = () => {
-  const [cita, actualizarCita] = useState({
+const Formulario = ({crearCita}) => {
+  const requiredData = {
     mascota: "",
     propietario: "",
     fecha: "",
     hora: "",
     sintomas: "",
-  });
+  };
+
+  const [cita, actualizarCita] = useState(requiredData);
 
   const [error, actualizarError] = useState(false);
 
@@ -28,16 +31,20 @@ const Formulario = () => {
     );
     if (!validForm) {
       actualizarError(true);
-      return;
+      return; //The return will stop function's execution
     } 
 
+    // If is valid, then we dont have errors
     actualizarError(false);
 
-    //Asignar un ID
+    // Assigning a unique id for the date
     cita.id = uuid();
 
-    console.log(cita);
+    // Creating the date with a function that modifies our global 'dates' state
+    crearCita(cita);
 
+    // Cleaning the fields
+    actualizarCita(requiredData);
   };
 
   return (
@@ -101,6 +108,10 @@ const Formulario = () => {
       </form>
     </Fragment>
   );
+};
+
+Formulario.propTypes = {
+  crearCita: PropTypes.func.isRequired,
 };
 
 export default Formulario;
