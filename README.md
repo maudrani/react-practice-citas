@@ -1,3 +1,8 @@
 # Project Citas
+>*"A basic schedule app."*
 
-<h4>See the result at: http://jovial-raman-c04757.netlify.app</h4>
+---
+[Uploaded Version!](http://jovial-raman-c04757.netlify.app)
+
+---
+*This project was created with [Create React App](https://github.com/facebook/create-react-app).*
